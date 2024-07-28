@@ -5,6 +5,10 @@ charts and data on some stock
 # S & P Data: https://www.investing.com/indices/us-spx-500-historical-data
 """
 
+"""
+INACTIVE, OLD VERSION
+"""
+
 # import the libraries
 import streamlit as st
 import pandas as pd
@@ -124,4 +128,6 @@ class StockWebApp:
         new_values = [start_date, end_date, stock_symbol]
         is_valid = old_values==new_values
         return start_date, end_date, stock_symbol, is_valid
+
+
       
