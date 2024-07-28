@@ -38,12 +38,11 @@ class StockWebApp:
         start_date = st.sidebar.text_input("Start Date", self.start)
         end_date = st.sidebar.text_input("End Date", self.end)
         stock_symbol = st.sidebar.text_input("Stock Symbol", self.sym)
-        if stock_symbol not in self.sym_available:
-            return st.error('Error: Stock data not available yet. \n Please try another stock.', icon="🚨")
-        else:
-            return start_date, end_date, stock_symbol
+        # self.valid returns an error if stock symbol is invalid, otherwise returns the stock symbol
+        out, passed = self.valid(stock_symbol)
+        return start_date, end_date, out, passed
+
             
-        
     # Create a function to get the company name
     def get_company_name(self, symbol):
         if symbol == 'AMZN':
@@ -114,7 +113,17 @@ class StockWebApp:
 
     """ SPECIAL FUNCS """
     # Check for valid inputs, stop program from outputting error if not valid and instead raise warning visual
-    def valid(self, stock_symbol_error=False, start_error=False, end_error=False):
-        if stock_symbol_error == True:
-            new_start = self.start
-            new_end = self.end
+    def valid(self, stock_symbol):
+        # second return value so that we can prevent TypeError
+        if stock_symbol not in self.sym_available:
+            return st.error('Error: Stock data not available yet. Please try again.', icon="🚨"), False
+        else:
+            return stock_symbol, True
+        """
+        TO BE IMPLEMENTED LATER: START AND END ERROR
+        elif start_error == True:
+            return st.error('Error: Start date out of range. Please try again.', icon="🚨"), False
+        elif end_error == True:
+            return st.error('Error: End date out of range. Please try again.', icon="🚨"), False
+        """
+        
