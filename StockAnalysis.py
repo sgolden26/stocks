@@ -1,6 +1,7 @@
 import pandas as pd
 import datetime
 import yfinance as yf
+import pandas_datareader as pdr
 #from StockWebApp import StockWebApp
 
 
@@ -11,10 +12,10 @@ class StockAnalysis:
    start = datetime.datetime(2023, 7, 28)
    end = datetime.datetime(2024, 7, 26)
    sym = "AMZN"
+   pdr.get_data_fred('GS10')
 
 
    def __init__(self, symbol, start, end):   #start, end, symbol passed in as a string in main class
-    # can convert to_datetime?
        year = lambda s: int(s[:4])
        month = lambda s: int(s[5:7])
        day = lambda s: int(s[8:])
@@ -25,7 +26,7 @@ class StockAnalysis:
 
 
    def get_data(self, symbol, start, end):
-       df = yf.Ticker('GOOGL').history(start, end)
+       df = yf.Ticker('GOOGL').history(start=start, end=end, interval='1D')
        return df
 
 
@@ -35,10 +36,10 @@ class StockAnalysis:
 
    def get_symbol(self):
        return self.sym
+"""
+s = StockAnalysis("AMZN", "2023-07-28", "2024-07-26")
+print(s.get_date(s.start))  #returns 2023-07-28 00:00:00
+print(s.get_date(s.end))    # returns 2024-07-28 00:00:00
+print(s.get_symbol())   # returns MZN
+"""
 
-    """
-    s = StockAnalysis("AMZN", "2023-07-28", "2024-07-26")
-    print(s.get_date(s.start))  #returns 2023-07-28 00:00:00
-    print(s.get_date(s.end))    # returns 2024-07-28 00:00:00
-    print(s.get_symbol())   # returns MZN
-    """

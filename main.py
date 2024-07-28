@@ -36,8 +36,9 @@ if passed:
     st.header('Data Statistics')
     st.write(df.describe())
    
-
+    
     #analysis
     df2 = analysis.get_data(symbol, start, end)
     st.header('Stock Analysis')
     st.write(df2.describe())
+    

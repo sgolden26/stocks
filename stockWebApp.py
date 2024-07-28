@@ -13,6 +13,7 @@ INACTIVE, OLD VERSION
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import pytz
 
 class StockWebApp:
 
@@ -129,5 +130,3 @@ class StockWebApp:
         is_valid = old_values==new_values
         return start_date, end_date, stock_symbol, is_valid
 
-
-      
