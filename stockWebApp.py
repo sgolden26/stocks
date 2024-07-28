@@ -12,6 +12,12 @@ from PIL import Image
 
 class StockWebApp:
 
+    start = "2023-07-28"
+    end =  "2024-07-26"
+    sym = "AMZN"
+
+    sym_available = ["AMZN", "GOOG", "META", "S&P500", "TSLA"]
+
     def setup(self):
         # Add a title and an image
         # ** bolds the text and # makes it the title
@@ -29,12 +35,15 @@ class StockWebApp:
 
     # Create a function to get the users input
     def get_input(self):
-        start_date = st.sidebar.text_input("Start Date", "2023-07-28")
-        end_date = st.sidebar.text_input("End Date", "2024-07-26")
-        stock_symbol = st.sidebar.text_input("Stock Symbol", "AMZN")
-        return start_date, end_date, stock_symbol
-
-
+        start_date = st.sidebar.text_input("Start Date", self.start)
+        end_date = st.sidebar.text_input("End Date", self.end)
+        stock_symbol = st.sidebar.text_input("Stock Symbol", self.sym)
+        if stock_symbol not in self.sym_available:
+            return st.error('Error: Stock data not available yet. \n Please try another stock.', icon="🚨")
+        else:
+            return start_date, end_date, stock_symbol
+            
+        
     # Create a function to get the company name
     def get_company_name(self, symbol):
         if symbol == 'AMZN':
@@ -66,8 +75,8 @@ class StockWebApp:
 
         # Get the date range
         # Convert dates to datetime data type
-        start = pd.to_datetime(start)
-        end = pd.to_datetime(end)
+        new_start = pd.to_datetime(start)
+        new_end = pd.to_datetime(end)
 
         # Set the start and end index rows both to 0
         start_row = 0
@@ -79,14 +88,14 @@ class StockWebApp:
 
         # Find starting index
         for i in range(0, len(df)):
-            if start <= pd.to_datetime(df['Date'][i]):
+            if new_start <= pd.to_datetime(df['Date'][i]):
                 start_row = i
                 break
 
         # Start from the bottom of the dataset and look up to see if the users end date is
         # greater than or equal to the end date in the data set
         for i in range(0, len(df)):
-            if end >= pd.to_datetime(df['Date'][len(df) - 1 - i]):
+            if new_end >= pd.to_datetime(df['Date'][len(df) - 1 - i]):
                 end_row = len(df) - 1 - i
                 break
 
@@ -103,3 +112,9 @@ class StockWebApp:
         # iloc is an indexer for pandas DataFrames and Series tha allows for integer location
         return df.iloc[start_row:end_row + 1, :]    #want only start-end rows, all of the columns
 
+    """ SPECIAL FUNCS """
+    # Check for valid inputs, stop program from outputting error if not valid and instead raise warning visual
+    def valid(self, stock_symbol_error=False, start_error=False, end_error=False):
+        if stock_symbol_error == True:
+            new_start = self.start
+            new_end = self.end
