@@ -39,8 +39,8 @@ class StockWebApp:
         end_date = st.sidebar.text_input("End Date", self.end)
         stock_symbol = st.sidebar.text_input("Stock Symbol", self.sym)
         # self.valid returns an error if stock symbol is invalid, otherwise returns the stock symbol
-        out, passed = self.valid(stock_symbol)
-        return start_date, end_date, out, passed
+        start_date, end_date, stock_symbol, passed = self.valid(start_date, end_date, stock_symbol)
+        return start_date, end_date, stock_symbol, passed
 
             
     # Create a function to get the company name
@@ -113,17 +113,16 @@ class StockWebApp:
 
     """ SPECIAL FUNCS """
     # Check for valid inputs, stop program from outputting error if not valid and instead raise warning visual
-    def valid(self, stock_symbol):
+    def valid(self, start_date, end_date, stock_symbol):
+        old_values = [start_date, end_date, stock_symbol]
         # second return value so that we can prevent TypeError
+        if pd.to_datetime(start_date) < pd.to_datetime(self.start):
+            start_date = st.error(f'**Error:** Only data from {self.start} is available. Please try again.', icon="🚨"), False
+        if pd.to_datetime(end_date) > pd.to_datetime(self.end):
+            end_date = st.error(f'**Error:** Only data until {self.end} is available. Please try again.', icon="🚨"), False
         if stock_symbol not in self.sym_available:
-            return st.error('Error: Stock data not available yet. Please try again.', icon="🚨"), False
-        else:
-            return stock_symbol, True
-        """
-        TO BE IMPLEMENTED LATER: START AND END ERROR
-        elif start_error == True:
-            return st.error('Error: Start date out of range. Please try again.', icon="🚨"), False
-        elif end_error == True:
-            return st.error('Error: End date out of range. Please try again.', icon="🚨"), False
-        """
-        
+            stock_symbol = st.error(f'**Error:** Stock data for {stock_symbol} is not available yet. Please try again.', icon="🚨"), False
+        new_values = [start_date, end_date, stock_symbol]
+        is_valid = old_values==new_values
+        return start_date, end_date, stock_symbol, is_valid
+      
