@@ -37,7 +37,7 @@ class StockWebApp:
     def get_input(self):
         start_date = st.sidebar.text_input("Start Date", self.start)
         end_date = st.sidebar.text_input("End Date", self.end)
-        stock_symbol = st.sidebar.text_input("Stock Symbol", self.sym)
+        stock_symbol = st.sidebar.text_input("Stock Symbol", self.sym).upper()
         # self.valid returns an error if stock symbol is invalid, otherwise returns the stock symbol
         start_date, end_date, stock_symbol, passed = self.valid(start_date, end_date, stock_symbol)
         return start_date, end_date, stock_symbol, passed
@@ -59,15 +59,14 @@ class StockWebApp:
     # Create a function to get the proper company data and the proper timeframe
     # From user start date to the user end date
     def get_data(self, symbol, start, end):
-
         # Load the data
-        if symbol.upper() == 'AMZN':
+        if symbol == 'AMZN':
             df = pd.read_csv("/Users/sarahgolden/Desktop/SMWapp/stocks/data/AMZN.csv")
-        elif symbol.upper() == 'GOOG':
+        elif symbol == 'GOOG':
             df = pd.read_csv("/Users/sarahgolden/Desktop/SMWapp/stocks/data/GOOG.csv")
-        elif symbol.upper() == 'META':
+        elif symbol == 'META':
             df = pd.read_csv("/Users/sarahgolden/Desktop/SMWapp/stocks/data/META.csv")
-        elif symbol.upper() == 'TSLA':
+        elif symbol == 'TSLA':
             df = pd.read_csv("/Users/sarahgolden/Desktop/SMWapp/stocks/data/TSLA.csv")
         else:
             df = pd.DataFrame(columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']) 
