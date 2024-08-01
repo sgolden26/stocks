@@ -29,7 +29,7 @@ class StockWebApp:
         st.sidebar.header("Data and Visualization")"""
         
         st.write("""
-        # Stock Market Web Application
+        # Stock Data and Visualization
         **Visually** show data on a stock! Date range from July 28, 2023 to July 26, 2024
         """)
 

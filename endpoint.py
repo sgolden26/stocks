@@ -9,7 +9,7 @@ home_page = st.Page(
 
 stocks_page = st.Page(
     page="views/Stock_Data.py", # 2_📈_Stock_Data
-    title="Stock Visualization and Data",
+    title="Stock Data and Visualization",
     icon="📈",
 )
 
