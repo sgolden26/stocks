@@ -3,17 +3,19 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 from StockWebApp import StockWebApp
-from StockAnalysis import StockAnalysis
+from ChatBot import ChatBot
+#from StockAnalysis import StockAnalysis
 
 web = StockWebApp()
 
 
 web.setup()
+chat = ChatBot()
 
 # Get the users input
 start, end, symbol, passed = web.get_input()
 
-analysis = StockAnalysis(symbol, start, end)
+#analysis = StockAnalysis(symbol, start, end)
 
 if passed:
 
@@ -36,9 +38,15 @@ if passed:
     st.header('Data Statistics')
     st.write(df.describe())
    
-    
+    # Chat for questions
+    st.header('Any questions? Talk to Jane!')
+    chat.run()
+
+
+
     #analysis
-    df2 = analysis.get_data(symbol, start, end)
-    st.header('Stock Analysis')
-    st.write(df2.describe())
+   
+    #df2 = analysis.get_data(symbol, start, end)
+    #st.header('Stock Analysis')
+    #st.write(df2.describe())
     

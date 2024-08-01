@@ -21,7 +21,7 @@ class StockWebApp:
     end =  "2024-07-26"
     sym = "AMZN"
 
-    sym_available = ["AMZN", "GOOG", "META", "S&P500", "TSLA"]
+    sym_available = ["AMZN", "GOOG", "META", "TSLA", "COF"]
 
     def setup(self):
         # Add a title and an image
@@ -58,6 +58,8 @@ class StockWebApp:
             return 'Meta'
         elif symbol == 'TSLA':
             return 'Tesla'
+        elif symbol == 'COF':
+            return 'Capital One'
         else:
             return 'None'
 
@@ -73,6 +75,9 @@ class StockWebApp:
             df = pd.read_csv("/Users/sarahgolden/Desktop/SMWapp/stocks/data/META.csv")
         elif symbol == 'TSLA':
             df = pd.read_csv("/Users/sarahgolden/Desktop/SMWapp/stocks/data/TSLA.csv")
+        elif symbol == 'COF':
+            df = pd.read_csv("/Users/sarahgolden/Desktop/SMWapp/stocks/data/COF.csv")
+        
         else:
             df = pd.DataFrame(columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']) 
 
