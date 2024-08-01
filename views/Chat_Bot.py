@@ -67,4 +67,7 @@ class ChatBot():
             # Add assistant response to chat history
             st.session_state.messages.append({"role": "assistant", "content": response})
         
-        
+st.title("Hello")
+st.write("Have a question? Jane can help you.")
+chat = ChatBot()
+chat.run()

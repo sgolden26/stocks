@@ -5,15 +5,13 @@ charts and data on some stock
 # S & P Data: https://www.investing.com/indices/us-spx-500-historical-data
 """
 
-"""
-INACTIVE, OLD VERSION
-"""
 
 # import the libraries
 import streamlit as st
 import pandas as pd
 from PIL import Image
 import pytz
+import json
 
 class StockWebApp:
 
@@ -26,18 +24,18 @@ class StockWebApp:
     def setup(self):
         # Add a title and an image
         # ** bolds the text and # makes it the title
-        st.set_page_config(page_title="Data and Visualization", page_icon="📈")
+        """st.set_page_config(page_title="Data and Visualization", page_icon="📈")
         st.markdown("# Data and Visualization")
-        st.sidebar.header("Data and Visualization")
+        st.sidebar.header("Data and Visualization")"""
         
         st.write("""
         # Stock Market Web Application
         **Visually** show data on a stock! Date range from July 28, 2023 to July 26, 2024
         """)
 
-        image = Image.open("/Users/sarahgolden/Desktop/SMWapp/stocks/stocks.png") #copy path by right clicking file on vs code
+        #image = Image.open("/Users/sarahgolden/Desktop/SMWapp/stocks/assets/stocks.png") #copy path by right clicking file on vs code
 
-        st.image(image, use_column_width=True)
+        #st.image(image, use_column_width=True)
 
         # Create a sidebar header
         st.sidebar.header('User Input') # have user input start date, end date, and stock symbol
@@ -139,3 +137,44 @@ class StockWebApp:
         is_valid = old_values==new_values
         return start_date, end_date, stock_symbol, is_valid
 
+
+# Now set up
+web = StockWebApp()
+
+web.setup()
+
+# Get the users input
+start, end, symbol, passed = web.get_input()
+
+#analysis = StockAnalysis(symbol, start, end)
+
+if passed:
+
+    # Get the data
+    df = web.get_data(symbol, start, end)
+
+    # Get company name
+    company_name = web.get_company_name(symbol.upper())
+
+    # Display the close price
+   
+    st.header(company_name + " Close Price\n")
+    st.line_chart(df['Close'])
+
+    # Display the volume
+    st.header(company_name + " Volume\n")
+    st.line_chart(df['Volume'])
+
+    # Get stats on data
+    st.header('Data Statistics')
+    st.write(df.describe())
+
+
+
+
+    #analysis
+   
+    #df2 = analysis.get_data(symbol, start, end)
+    #st.header('Stock Analysis')
+    #st.write(df2.describe())
+    
