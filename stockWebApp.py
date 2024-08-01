@@ -26,6 +26,10 @@ class StockWebApp:
     def setup(self):
         # Add a title and an image
         # ** bolds the text and # makes it the title
+        st.set_page_config(page_title="Data and Visualization", page_icon="📈")
+        st.markdown("# Data and Visualization")
+        st.sidebar.header("Data and Visualization")
+        
         st.write("""
         # Stock Market Web Application
         **Visually** show data on a stock! Date range from July 28, 2023 to July 26, 2024

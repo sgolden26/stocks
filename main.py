@@ -4,13 +4,15 @@ import pandas as pd
 from PIL import Image
 from StockWebApp import StockWebApp
 from ChatBot import ChatBot
-#from StockAnalysis import StockAnalysis
+import json
 
+
+
+# Now set up
 web = StockWebApp()
-
+chat = ChatBot()
 
 web.setup()
-chat = ChatBot()
 
 # Get the users input
 start, end, symbol, passed = web.get_input()
