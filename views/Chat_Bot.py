@@ -21,7 +21,7 @@ class ChatBot():
         openai.api_key = self.get_openai_key()
       
         if "openai_model" not in st.session_state:
-            st.session_state["openai_model"] = "gpt-3.5-turbo"
+            st.session_state["openai_model"] = "gpt-4o-mini"
 
         # session state allows app to remember data bw user interactions
         # messages holds a dictionary of 
@@ -53,7 +53,7 @@ class ChatBot():
                 for response in openai.ChatCompletion.create(
                     model=st.session_state["openai_model"], # pass in model, saved in session state
                     messages=[
-                        {"role": ["role"], "content": m["content"]}
+                        {"role": m["role"], "content": m["content"]}
                         for m in st.session_state.messages
                     ],
                     stream=True, #simulate typing effect
